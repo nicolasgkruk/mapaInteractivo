@@ -3,27 +3,60 @@ lugaresModulo = (function () {
 
     // Completa las direcciones ingresadas por el usuario a y establece los límites
     // con un círculo cuyo radio es de 20000 metros.
-  function autocompletar () {
+  function autocompletar () { 
         /* Completar la función autocompletar(): autocompleta los 4 campos de texto de la
         página (las direcciones ingresables por el usuario).
         Para esto creá un círculo con radio de 20000 metros y usalo para fijar
         los límites de la búsqueda de dirección. El círculo no se debe ver en el mapa. */
-  }
+    var posicionCentral = {
+      lat: -34.592868, 
+      lng: -58.4199791
+    }
+    var circulo = new google.maps.Circle({
+      center: posicionCentral,
+      radius: 20000
+    });
+    var inputDireccion = document.getElementById('direccion');
+    var inputDesde = document.getElementById('desde');
+    var inputHasta = document.getElementById('hasta');
+    var inputAgregar = document.getElementById('agregar');
+    var options = {
+      bounds: circulo.getBounds(),
+      types: ['establishment']
+    };
+    autocomplete = new google.maps.places.Autocomplete(inputDireccion, options);
+    autocomplete2 = new google.maps.places.Autocomplete(inputDesde, options);
+    autocomplete3 = new google.maps.places.Autocomplete(inputHasta, options);
+    autocomplete4 = new google.maps.places.Autocomplete(inputAgregar, options);
 
+   /*  autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      if (place.length == 0) {
+        return;
+      }
+    }); */
+  }
     // Inicializo la variable servicioLugares y llamo a la función autocompletar
   function inicializar () {
     servicioLugares = new google.maps.places.PlacesService(mapa)
     autocompletar()
   }
-
     // Busca lugares con el tipo especificado en el campo de TipoDeLugar
-
   function buscarCerca (posicion) {
-        /* Completar la función buscarCerca  que realice la búsqueda de los lugares
+    /* Completar la función buscarCerca  que realice la búsqueda de los lugares
     del tipo (tipodeLugar) y con el radio indicados en el HTML cerca del lugar
     pasado como parámetro y llame a la función marcarLugares. */
+    var rango = document.getElementById('radio');
+    var request = {
+      location: posicion,
+      radius: rango.value,
+      type: [tipoDeLugar.value]
+    };
 
+    service = new google.maps.places.PlacesService(mapa);
+    service.nearbySearch(request, marcadorModulo.marcarLugares);
   }
+  
   return {
     inicializar,
     buscarCerca
