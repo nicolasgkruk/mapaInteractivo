@@ -85,7 +85,7 @@ direccionesModulo = (function () {
       draggable: true,
       map: mapa,
       panel: document.getElementById('directions-panel-summary'),
-      suppressMarkers: true
+      suppressMarkers: false
     })
   }
 
@@ -105,12 +105,24 @@ direccionesModulo = (function () {
         travelMode = "WALKING";
       } else if (travelMode === "Bus/Subterraneo/Tren") {
         travelMode = "TRANSIT";
+      } 
+      var waypts = [];
+      var checkboxArray = document.getElementById('puntosIntermedios');
+        for (var i = 0; i < checkboxArray.length; i++) {
+          if (checkboxArray.options[i].selected) {
+            waypts.push({
+            location: checkboxArray[i].value,
+            stopover: true
+          });
+        }
       }
 
       var directionsRequest = {
         origin: startDirection,
         destination: endDirection,
         travelMode: travelMode,
+        waypoints: waypts,
+
       }
 
       servicioDirecciones.route(directionsRequest,function(result, status) {
