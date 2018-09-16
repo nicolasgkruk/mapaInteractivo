@@ -91,26 +91,35 @@ direccionesModulo = (function () {
 
     // Calcula la ruta entre los puntos Desde y Hasta con los puntosIntermedios
     // dependiendo de la formaDeIr que puede ser Caminando, Auto o Bus/Subterraneo/Tren
-  function calcularYMostrarRutas () {
-    
-        /* Completar la función calcularYMostrarRutas , que dependiendo de la forma en que el
-        usuario quiere ir de un camino al otro, calcula la ruta entre esas dos posiciones
-         y luego muestra la ruta. */
-        var startDirection = document.getElementById('desde').value;
-        var endDirection = document.getElementById('hasta').value;
-        var travelMean = document.getElementById('comoIr').value
-        var directionsRequest = {
-          origin: ​startDirection, 
-          destination: endDirection, 
-          travelMode: ​travelMean,
+    function calcularYMostrarRutas () {
+
+      /* Completar la función calcularYMostrarRutas , que dependiendo de la forma en que el
+      usuario quiere ir de un camino al otro, calcula la ruta entre esas dos posiciones
+       y luego muestra la ruta. */
+      var startDirection = document.getElementById('desde').value;
+      var endDirection = document.getElementById('hasta').value;
+      var travelMode = document.getElementById('comoIr').value;
+      if (travelMode === "Auto") {
+        travelMode = "DRIVING";
+      } else if (travelMode === "Caminando") {
+        travelMode = "WALKING";
+      } else if (travelMode === "Bus/Subterraneo/Tren") {
+        travelMode = "TRANSIT";
+      }
+
+      var directionsRequest = {
+        origin: startDirection,
+        destination: endDirection,
+        travelMode: travelMode,
+      }
+
+      servicioDirecciones.route(directionsRequest,function(result, status) {
+        if (status == "OK") {
+          mostradorDirecciones.setMap(mapa);
+          mostradorDirecciones.setDirections(result);
         }
-        servicioDirecciones.route(directionsRequest,function(result, status) {
-          if (status == "OK") {
-            mostradorDirecciones.setMap(mapa);
-            mostradorDirecciones.setDirections(result);
-          }
-        })
-  }
+      })
+}
   return {
     inicializar,
     agregarDireccion,
@@ -119,4 +128,3 @@ direccionesModulo = (function () {
     calcularYMostrarRutas
   }
 })()
-//
