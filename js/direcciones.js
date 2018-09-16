@@ -111,7 +111,6 @@ direccionesModulo = (function () {
           }
         })
   }
-
   return {
     inicializar,
     agregarDireccion,
@@ -119,4 +118,5 @@ direccionesModulo = (function () {
     agregarDireccionYMostrarEnMapa,
     calcularYMostrarRutas
   }
-}())
+})()
+//
