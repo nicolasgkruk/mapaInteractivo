@@ -159,10 +159,10 @@ marcadorModulo = (function () {
     // Llamo a la funcion agregarMarcadoresClicCargarDirecciones() para que marque a los lugares
     // cuando se hace clic en AgregarDirecciones
   function inicializar () {
-        // Muestra marcador cuando se presioná enteren el campo direccion
+        // Muestra marcador cuando se presioná enter en el campo direccion
     $('#direccion').keypress(function (e) {
       if (e.keyCode == 13) {
-        marcadorModulo.mostrarMiMarcador()
+        marcadorModulo.mostrarMiMarcador() //Qué hace esto????
       }
     })
     infoVentana = new google.maps.InfoWindow()
